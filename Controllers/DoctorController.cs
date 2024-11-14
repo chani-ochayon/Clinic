@@ -9,50 +9,51 @@ namespace ClinicProject.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-
-        private static List<DoctorClass> Doctors = new List<DoctorClass> {
-
-        new DoctorClass { Name="ARIEL",Id=1,Foun="0588888888",WorkHours=0},
-        new DoctorClass { Name="efraim",Id=2,Foun="058222288",WorkHours=0}
-        };
-
-
-
-
-
+        private readonly DataContext _dataContext;
+        public DoctorController(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
 
     // GET: api/<DoctorController>
     [HttpGet]
         public IEnumerable<DoctorClass> Get()
         {
-            return Doctors;
+            return _dataContext.Doctors;
         }
 
-        // GET api/<DoctorController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //// GET api/<DoctorController>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST api/<DoctorController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] DoctorClass value)
         {
+            _dataContext.Doctors.Add(value);
         }
 
         // PUT api/<DoctorController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] DoctorClass value)
         {
-           var index = Doctors.FindIndex(x => x.Id == id);
-            Doctors[index] = value;
+           var index = _dataContext.Doctors.FindIndex(x => x.Id == id);
+            _dataContext.Doctors[index] = value;
         }
 
         // DELETE api/<DoctorController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-        }
-    }
+            var index = _dataContext.Doctors.FindIndex(x => x.Id == id);
+            if (index != -1)
+            {
+                _dataContext.Doctors.RemoveAt(index);
+                return Ok();
+            }
+            return NotFound();
+}        }
 }

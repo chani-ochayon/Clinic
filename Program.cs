@@ -1,3 +1,5 @@
+using ClinicProject;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +17,7 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });
+builder.Services.AddSingleton<DataContext>();
 
 var app = builder.Build();
 

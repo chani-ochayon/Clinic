@@ -30,3 +30,4 @@ T:\Group A\C#\חני אוחיון\Clinic פרוייקט\ClinicProject\ClinicProj
 T:\Group A\C#\חני אוחיון\Clinic פרוייקט\ClinicProject\ClinicProject\obj\Debug\net8.0\ClinicProject.pdb
 T:\Group A\C#\חני אוחיון\Clinic פרוייקט\ClinicProject\ClinicProject\obj\Debug\net8.0\ClinicProject.genruntimeconfig.cache
 T:\Group A\C#\חני אוחיון\Clinic פרוייקט\ClinicProject\ClinicProject\obj\Debug\net8.0\ref\ClinicProject.dll
+T:\Group A\C#\חני אוחיון\Clinic פרוייקט\ClinicProject\ClinicProject\obj\Debug\net8.0\ClinicProject.sourcelink.json

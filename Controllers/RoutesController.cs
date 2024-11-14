@@ -10,45 +10,58 @@ namespace ClinicProject.Controllers
     [ApiController]
     public class RoutesController : ControllerBase
     {
-        private static List<RoutesClass> routes = new List<RoutesClass> {
-        new RoutesClass{TimeStart = "07:10",TimeEnd="16:30",PatientId=1,DoctorId=1 },
-        new RoutesClass{TimeStart = "16:30",TimeEnd="20:30",PatientId=2,DoctorId=2 }
-
-         };
+        private readonly DataContext _dataContext;
+        public RoutesController(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
 
         // GET: api/<RoutesController>
         [HttpGet]
         public IEnumerable<RoutesClass> Get()
         {
-            return routes;
+            return _dataContext.routes;
             
         }
 
-        // GET api/<RoutesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //// GET api/<RoutesController>/5
+        //[HttpGet("{id}")]
+        //public RoutesClass Get(int id)
+        //{
+
+        //    var index = routes.FindIndex(x => x.Id == id);
+        //    return routes[index];
+
+        //}
 
         // POST api/<RoutesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] RoutesClass value)
         {
+            _dataContext.routes.Add(value);
         }
 
         // PUT api/<RoutesController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] RoutesClass value)
         {
-            var index = routes.FindIndex(x => x.Id == id);
-            routes[index] = value;
+            var index = _dataContext.routes.FindIndex(x => x.Id == id);
+            _dataContext.routes[index] = value;
         }
 
         // DELETE api/<RoutesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public  ActionResult Delete(int id)
         {
+
+            var index = _dataContext.routes.FindIndex(x => x.Id == id);
+            if (index != -1)
+            {
+                _dataContext.routes.RemoveAt(index);
+                return Ok();
+            }
+            return NotFound();
+           
         }
     }
 }
