@@ -24,9 +24,16 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddScoped<IDoctorService, DoctorServise >();
+builder.Services.AddScoped<IDoctorService, DoctorServise>();
 builder.Services.AddScoped<IDoctorRepositories, DoctorRepositories>();
 builder.Services.AddSingleton<DataContext>();
+
+builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IPatientRepositories, PatientRepositories>();
+
+builder.Services.AddScoped<IRoutesRepositories, RoutesRepositories>();
+builder.Services.AddScoped<IRoutesService, RoutesService>();
+
 
 var app = builder.Build();
 

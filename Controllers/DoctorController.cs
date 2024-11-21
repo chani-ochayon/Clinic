@@ -1,6 +1,7 @@
 ﻿using ClinicProject.Core.Entities;
 using ClinicProject.Core.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,7 +21,7 @@ namespace ClinicProject.Controllers
     [HttpGet]
         public IEnumerable<DoctorClass>Get()
         {
-            return _doctorService.GetDoctorClasses();
+            return _doctorService.GetDoctor();
         }
 
         //// GET api/<DoctorController>/5
@@ -32,9 +33,15 @@ namespace ClinicProject.Controllers
 
         // POST api/<DoctorController>
         [HttpPost]
-        public void Post([FromBody] DoctorClass value)
+        public ActionResult Post([FromBody] DoctorClass value)
         {
+            if (value==null || _doctorService.IsExist(value))
+            {
+                // אם הרופא קיים, מחזירים תשובה מתאימה
+                return Conflict("Doctor already exists.");
+            }
             _doctorService.AddDoctor(value);
+            return Ok();
         }
 
         // PUT api/<DoctorController>/5

@@ -1,6 +1,10 @@
-﻿using Cinic_Project.Entities;
-using ClinicProject.Entities;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ClinicProject.Core.Entities;
+using ClinicProject.Core.Services;
+using ClinicProject.Service;
+
+
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,18 +14,17 @@ namespace ClinicProject.Controllers
     [ApiController]
     public class RoutesController : ControllerBase
     {
-        private readonly DataContext _dataContext;
-        public RoutesController(DataContext dataContext)
+        private IRoutesService _routesService;
+        public RoutesController(IRoutesService routesService)
         {
-            _dataContext = dataContext;
+            _routesService = routesService;
         }
 
         // GET: api/<RoutesController>
         [HttpGet]
         public IEnumerable<RoutesClass> Get()
         {
-            return _dataContext.routes;
-            
+            return _routesService.GetRoutes();
         }
 
         //// GET api/<RoutesController>/5
@@ -36,9 +39,19 @@ namespace ClinicProject.Controllers
 
         // POST api/<RoutesController>
         [HttpPost]
-        public void Post([FromBody] RoutesClass value)
+        public ActionResult Post([FromBody] RoutesClass value)
         {
-            _dataContext.routes.Add(value);
+            if (_routesService.IsExist(value))
+            {
+                // אם הרופא קיים, מחזירים תשובה מתאימה
+                return Conflict(" Route already take one's place.");
+            }
+            else if (value == null)
+            {
+                return Conflict("Route is null.");
+            }
+            _routesService.AddRoute(value);
+            return Ok();
         }
 
         // PUT api/<RoutesController>/5
@@ -51,7 +64,7 @@ namespace ClinicProject.Controllers
 
         // DELETE api/<RoutesController>/5
         [HttpDelete("{id}")]
-        public  ActionResult Delete(int id)
+        public ActionResult Delete(int id)
         {
 
             var index = _dataContext.routes.FindIndex(x => x.Id == id);
@@ -61,7 +74,7 @@ namespace ClinicProject.Controllers
                 return Ok();
             }
             return NotFound();
-           
+
         }
     }
 }
