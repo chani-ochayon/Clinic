@@ -1,4 +1,10 @@
 using ClinicProject;
+using ClinicProject.Data;
+using ClinicProject.Service;
+using ClinicProject.Core.Services;
+using ClinicProject.Core.Repositories;
+using ClinicProject.Data.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +23,9 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });
+
+builder.Services.AddScoped<IDoctorService, DoctorServise >();
+builder.Services.AddScoped<IDoctorRepositories, DoctorRepositories>();
 builder.Services.AddSingleton<DataContext>();
 
 var app = builder.Build();

@@ -1,4 +1,5 @@
-﻿using ClinicProject.Entities;
+﻿using ClinicProject.Core.Entities;
+using ClinicProject.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,17 +10,17 @@ namespace ClinicProject.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        private readonly DataContext _dataContext;
-        public DoctorController(DataContext dataContext)
+      private IDoctorService _doctorService;
+      public DoctorController(IDoctorService doctorService)
         {
-            _dataContext = dataContext;
+            _doctorService = doctorService;
         }
 
     // GET: api/<DoctorController>
     [HttpGet]
-        public IEnumerable<DoctorClass> Get()
+        public IEnumerable<DoctorClass>Get()
         {
-            return _dataContext.Doctors;
+            return _doctorService.GetDoctorClasses();
         }
 
         //// GET api/<DoctorController>/5
@@ -33,14 +34,14 @@ namespace ClinicProject.Controllers
         [HttpPost]
         public void Post([FromBody] DoctorClass value)
         {
-            _dataContext.Doctors.Add(value);
+            _doctorService.AddDoctor(value);
         }
 
         // PUT api/<DoctorController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] DoctorClass value)
         {
-           var index = _dataContext.Doctors.FindIndex(x => x.Id == id);
+           var index =_doctorService.Doctors.FindIndex(x => x.Id == id);
             _dataContext.Doctors[index] = value;
         }
 

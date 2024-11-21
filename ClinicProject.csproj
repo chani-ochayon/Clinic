@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClinicProject.Core\ClinicProject.Core.csproj" />
+    <ProjectReference Include="..\ClinicProject.Data\ClinicProject.Data.csproj" />
+    <ProjectReference Include="..\ClinicProject.Service\ClinicProject.Service.csproj" />
   </ItemGroup>
 
 </Project>
