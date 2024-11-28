@@ -48,18 +48,18 @@ namespace ClinicProject.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] DoctorClass value)
         {
-           var index =_doctorService.Doctors.FindIndex(x => x.Id == id);
-            _dataContext.Doctors[index] = value;
+           var index =_doctorService.GetDoctor().FindIndex(x => x.Id == id);
+            _doctorService.GetDoctor()[index] = value;
         }
 
         // DELETE api/<DoctorController>/5
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var index = _dataContext.Doctors.FindIndex(x => x.Id == id);
+            var index = _doctorService.GetDoctor().FindIndex(x => x.Id == id);
             if (index != -1)
             {
-                _dataContext.Doctors.RemoveAt(index);
+                _doctorService.GetDoctor().RemoveAt(index);
                 return Ok();
             }
             return NotFound();

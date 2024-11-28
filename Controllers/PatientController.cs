@@ -54,9 +54,9 @@ namespace ClinicProject.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] PatientClass value)
         {
-            var index = _dataContext.Patients.FindIndex(x => x.Id == id);
-            if (index == -1) { 
-            _dataContext.Patients[index] = value;
+            var index = _patientService.GetPatients().FindIndex(x => x.Id == id);
+            if (index == -1) {
+                _patientService.GetPatients()[index] = value;
                 return Ok();
             }
             return NotFound();
@@ -67,10 +67,10 @@ namespace ClinicProject.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var index = _dataContext.Patients.FindIndex(x =>x.Id == id);
+            var index = _patientService.GetPatients().FindIndex(x =>x.Id == id);
             if (index != -1)
             {
-                _dataContext.Patients.RemoveAt(index);
+                _patientService.GetPatients().RemoveAt(index);
                 return Ok();
             }
             return NotFound();

@@ -26,7 +26,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<IDoctorService, DoctorServise>();
 builder.Services.AddScoped<IDoctorRepositories, DoctorRepositories>();
-builder.Services.AddSingleton<DataContext>();
+builder.Services.AddDbContext<DataContext>();
 
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IPatientRepositories, PatientRepositories>();

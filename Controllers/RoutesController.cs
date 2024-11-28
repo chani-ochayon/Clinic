@@ -58,8 +58,8 @@ namespace ClinicProject.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] RoutesClass value)
         {
-            var index = _dataContext.routes.FindIndex(x => x.Id == id);
-            _dataContext.routes[index] = value;
+            var index = _routesService.GetRoutes().FindIndex(x => x.Id == id);
+            _routesService.GetRoutes()[index] = value;
         }
 
         // DELETE api/<RoutesController>/5
@@ -67,10 +67,10 @@ namespace ClinicProject.Controllers
         public ActionResult Delete(int id)
         {
 
-            var index = _dataContext.routes.FindIndex(x => x.Id == id);
+            var index = _routesService.GetRoutes().FindIndex(x => x.Id == id);
             if (index != -1)
             {
-                _dataContext.routes.RemoveAt(index);
+                _routesService.GetRoutes().RemoveAt(index);
                 return Ok();
             }
             return NotFound();
